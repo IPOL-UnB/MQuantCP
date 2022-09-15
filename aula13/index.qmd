@@ -2,6 +2,8 @@
 title: "Regressões Lineares"
 author: "Frederico Bertholini"
 format: revealjs
+chalkboard: true
+
 editor: visual
 ---
 
