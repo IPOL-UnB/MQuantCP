@@ -1,0 +1,402 @@
+---
+title: "Regressões Lineares"
+author: "Frederico Bertholini"
+format: revealjs
+editor: visual
+---
+
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = T,eval=T,warning = F,message = F,comment = '',fig.height = 3.5)
+
+pacman::p_load(
+    tidyverse,
+    janitor,
+    readxl,
+    patchwork,
+    infer,
+    moderndive,
+    kableExtra,
+    scales,
+    tidymodels,
+    arm,
+    sjPlot,
+    broom,
+    nycflights13,
+    ggplot2movies,
+    patchwork,
+    viridis,
+    ggrepel,
+    gt,
+    effectsize,
+    extrafont,
+    hrbrthemes,
+    stringr,
+    knitr, 
+    magrittr
+)
+
+
+
+
+legenda <- read_excel("dados/bdcap8v2_leg.xlsx")
+```
+
+## Conceitos
+
+Modelos de regressão estabelecem relações entre variáveis.
+
+Isso é feito através de uma equação que expressa uma variável **dependente** em termos de uma ou mais variáveis **independentes**.
+
+
+## Visualizando relações entre variáveis
+
+```{r, eval=TRUE}
+legenda %>% ggplot(aes(x = DOAPFIS, y = VOTLEG)) + 
+  geom_point() + # Adiciona os pontos
+  geom_smooth(method = "lm",se=F) + # Adiciona a curva, estimada por um modelo linear
+  labs(x="",y="")
+```
+
+
+##
+
+Tendência geral: $VOTLEG = \beta_0 + \beta_1 DOAPFIS$
+
+4 perguntas importantes:
+
+Quem é a varável dependente?
+
+Quem é a independente?
+
+Qual é o significado de $\beta_1$?
+
+Qual é o significado de $\beta_0$? 
+
+## $\beta_0$
+
+![](imgs/beta0.png)
+
+## $\beta_1$
+
+![](imgs/beta1.png)
+
+##
+
+X e Y estão relacionadas. Esta relação ocorre para todos os X´s e Y´s.
+
+Nós coletamos alguns dados e possuímos apenas uma amostra de toda a população de X e Y. 
+Observando a relação entre os X’s e Y’s da nossa amostra, nós tentamos estimar a relação entre X e Y na população. 
+
+
+$$
+Y_i = \beta_0 + \beta_1 x_{i1} + \epsilon_i
+$$
+
+$$
+Y_{i}=\hat{\beta}_{0}+\hat{\beta}_{1} X_{i}+\hat{\varepsilon}_{i}
+$$
+
+$$
+\hat{Y}=b_{0}+b_{1} X
+$$
+
+
+## O que estamos testando? (e se $\beta_1=0$)
+
+![](imgs/beta1.png)
+
+## Significância e valor-p da regressão
+
+$$
+\left\{\begin{array}{l}
+H_{0}: \beta_{1}=0 \\
+H_{A}: \beta_{1} \neq 0
+\end{array}\right.
+$$
+
+Teste da significância de $\beta_{1}$:
+
+Valor-p < o que considerarmos adequado (0,05?) : Rejeita $H_{0}$ 
+
+-> A relação entre X e Y é **significante**, ou seja, tem significância do ponto de vista estatístico.
+
+
+ps.: Significante é o mesmo que significativo?
+
+
+
+## Estimativas
+
+```{r, eval=TRUE}
+(meu_modelo <- legenda %>% lm(VOTLEG ~ DOAPFIS, data = .))
+```
+
+##
+```{r}
+get_regression_points(meu_modelo) %>%
+  ggplot(aes(x = residual)) +
+  geom_histogram(color = "white") +
+  labs(x = "Residuos")
+```
+
+## Resíduos com `sjPlot`
+```{r}
+sjPlot::plot_residuals(meu_modelo)
+```
+
+## Quais são as características ideais da nossa reta?
+
+Resíduo esperado é zero: $E(e)=0$
+
+Erra igualmente para ambos os lados 
+
+Erra o mínimo possível
+
+
+## Método dos mínimos quadrados
+
+Escolhe uma reta de forma que a soma dos erros ao quadrado seja a menor possível.
+
+Encontrar os valores de $b_0$ e $b_1$ para o qual é o menor possível.
+
+
+```{r,echo=F}
+sjPlot::plot_residuals(meu_modelo)
+```
+
+## MMQ ou OLS ...
+
+Encontrar os valores de $b_0$  e $b_1$ que minimizem
+$$
+S=\sum_{i}\left[Y_{i}-\left(b_{0}+b_{1} X\right)\right]^{2}
+$$
+Obtemos isso calculando $b_0$  e $b_1$  tais que
+$$
+\frac{\partial S}{\partial b_{0}}=0 \quad \frac{\partial S}{\partial b_{1}}=0
+$$
+Resolvendo, chega-se a:
+$$
+b_{1}=\frac{n \sum_{i} X_{i} Y_{i}-\left(\sum_{i} X_{i}\right)\left(\sum_{i} Y_{i}\right)}{n \sum_{i} X_{i}^{2}-\left(\sum_{i} X_{i}\right)^{2}}
+$$
+
+$$
+b_{0}=\frac{\left(\sum_{i} Y_{i}\right)\left(\sum_{i} X_{i}^{2}\right)-\left(\sum_{i} X_{i}\right)\left(\sum_{i} X_{i} Y_{i}\right)}{n \sum_{i} X_{i}^{2}-\left(\sum_{i} X_{i}\right)^{2}}
+$$
+
+## ...continua
+
+Que pode ser escrito como
+$$
+b_{1}=\frac{\operatorname{cov}(X, Y)}{\operatorname{var}(X)}
+$$
+
+$$
+\bar{Y}=b_{0}+b_{1} \bar{X}
+$$
+
+## Sob certas premissas, é possível provar que
+
+$$
+\frac{b_{1}}{s_{b_{1}}} \sim t_{n-2}
+$$
+Onde 
+$$
+s_{b_{1}}^{2}=\frac{s^{2}}{\sum_{i}\left(X_{i}-\bar{X}\right)^{2}} \quad s_{e}^{2}=\frac{\sum_{i} e_{i}^{2}}{n-2}
+$$
+
+Isto permite:
+
+  -- realizar teste de hipóteses com b1, como, por exemplo, testar sua significância
+
+  -- Construir intervalos de confiança e de predição para Y em um valor de X qualquer
+
+
+## Premissas
+
+Os resíduos devem ser normais, homoscedásticos e independentes.
+
+## Normalidade
+
+![](imgs/norm1.png)
+
+## Normalidade
+
+![](imgs/norm2.png)
+
+## Homocedasticidade
+
+![](imgs/homoc.png)
+
+## Independência
+
+![](imgs/indep.png)
+
+## $R^2$
+
+![](imgs/r2_explica.png)
+
+## Modelos explicativos e preditivos
+
+Modelos de regressão podem servir para explicar ou para prever.
+
+ - Em modelos explicativos, o que importa é ter fortes razões para crer que as variáveis explicativas influenciam a variável explicada. Isso é medido por um valor-p baixo.
+
+ - Em modelos preditivos, o que importa é ter um bom ajuste da reta aos dados. Isso é medido por um $R^2$ alto.
+
+Modelo preditivo: Previsão eleitoral (electoral forecasting)
+
+Modelo explicativo: total de votos de legenda para deputado federal (VOTLEG) **explicado por** número de doações de pessoas físicas (DOAPFIS)
+
+## Eliminando outliers
+```{r}
+legenda %<>% dplyr::filter(DOAPFIS<5000,VOTLEG<2000000)
+(meu_modelo <- legenda %>% lm(VOTLEG ~ DOAPFIS, data = .))
+```
+
+
+## Usando `tidy`
+```{r}
+tidy(meu_modelo)
+```
+
+
+## Usando `glance`
+```{r}
+glance(meu_modelo)
+```
+
+
+## Resíduos com `sjPlot`
+```{r}
+sjPlot::plot_residuals(meu_modelo)
+```
+
+
+## Inferência
+NC = 95%
+```{r, eval=TRUE}
+confint(meu_modelo, level = 0.95)
+```
+
+NC = 90%
+```{r, eval=TRUE}
+confint(meu_modelo, level = 0.90)
+```
+
+
+## É possível salvar o *output* da função `summary`
+```{r, eval=TRUE}
+(resumo <- summary(meu_modelo))
+```
+
+
+## Obtendo resultados detalhados
+
+```{r, eval=TRUE}
+meu_modelo$coefficients
+```
+
+## Outras informações salvas dentro do objeto podem ser vistas com `names`:
+
+```{r, eval=TRUE}
+names(meu_modelo)
+```
+
+$R^2$
+```{r, eval=TRUE}
+resumo$r.squared
+```
+
+##
+```{r}
+sjPlot::plot_model(meu_modelo)
+```
+
+
+## Diagnósticos
+
+```{r}
+GGally::ggnostic(meu_modelo)
+```
+
+
+##
+```{r}
+get_regression_points(meu_modelo) %>% mutate(residual=scale(residual)) %>%
+  ggplot(aes(x = residual)) +
+  geom_histogram(binwidth = .25,color = "white") +
+  labs(x = "Residuos")
+```
+
+##
+```{r}
+get_regression_points(meu_modelo) %>% mutate(residual=scale(residual)) %>%
+  ggplot(aes(x = DOAPFIS, y = residual)) +
+  geom_point() + labs(x = "Doações", y = "Residuos") +
+  geom_hline(yintercept = 0, col = "blue", size = 1)
+```
+
+##
+```{r}
+plot(meu_modelo,1)
+```
+
+##
+```{r}
+plot(meu_modelo,2)
+```
+
+##
+```{r}
+plot(meu_modelo,3)
+```
+
+##
+```{r}
+plot(meu_modelo,4)
+```
+
+
+
+# Modelos Lineares Multivariados 
+
+
+## Modelo linear com dois preditores
+
+```{r, eval=TRUE}
+(meu_modelo2 <- legenda %>% lm(VOTLEG ~ DOAPFIS + NUMCAND, data = .))
+```
+
+
+
+## Obtendo resultados simplificados com `arm`
+
+```{r, eval=TRUE}
+arm::display(meu_modelo2)
+```
+
+
+## Interpretando resultados com gráficos
+
+```{r, eval=TRUE}
+coefplot(meu_modelo2)
+```
+
+## Interpretando resultados com gráficos
+
+```{r, eval=TRUE}
+sjPlot::plot_model(meu_modelo2)
+```
+
+##
+```{r}
+sjPlot::plot_residuals(meu_modelo2)
+```
+
+
+
+
+
+
