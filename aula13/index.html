@@ -521,16 +521,23 @@ b_{0}=\frac{\left(\sum_{i} Y_{i}\right)\left(\sum_{i} X_{i}^{2}\right)-\left(\su
 <p><span class="math display">\[
 b_{1}=\frac{\operatorname{cov}(X, Y)}{\operatorname{var}(X)}
 \]</span></p>
+<p>e</p>
 <p><span class="math display">\[
-\bar{Y}=b_{0}+b_{1} \bar{X}
+b_{0}=\bar{Y}-b_{1} \bar{X}
 \]</span></p>
 </section>
 <section id="sob-certas-premissas-é-possível-provar-que" class="slide level2">
 <h2>Sob certas premissas, é possível provar que</h2>
-<p>$$ t_{n-2}</p>
-<p><span class="math display">\[ Onde \]</span></p>
-<p>s_{b_{1}}^{2}= s_{e}^{2}= $$</p>
-<p>Isto permite:</p>
+<p><span class="math display">\[
+\frac{b_{1}}{s_{b_{1}}} \sim t_{n-2}
+\]</span></p>
+<p>Onde</p>
+<p><span class="math display">\[
+s_{b_{1}}^{2}=\frac{s^{2}}{\sum_{i}\left(X_{i}-\bar{X}\right)^{2}} \quad s_{e}^{2}=\frac{\sum_{i} e_{i}^{2}}{n-2}
+\]</span></p>
+</section>
+<section id="isto-permite" class="slide level2">
+<h2>Isto permite:</h2>
 <p>– realizar teste de hipóteses com b1, como, por exemplo, testar sua significância</p>
 <p>– Construir intervalos de confiança e de predição para Y em um valor de X qualquer</p>
 </section>
@@ -558,7 +565,7 @@ b_{1}=\frac{\operatorname{cov}(X, Y)}{\operatorname{var}(X)}
 <h2><span class="math inline">\(R^2\)</span></h2>
 
 <img data-src="imgs/r2_explica.png" class="r-stretch"></section>
-<section id="modelos-explicativos-e-preditivos" class="slide level2">
+<section id="modelos-explicativos-e-preditivos" class="slide level2 smaller">
 <h2>Modelos explicativos e preditivos</h2>
 <p>Modelos de regressão podem servir para explicar ou para prever.</p>
 <ul>
@@ -777,7 +784,7 @@ Note:               *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 
 </div>
 <img data-src="index_files/figure-revealjs/unnamed-chunk-20-1.png" width="960" class="r-stretch"></section>
-<section id="section-5" class="slide level2">
+<section id="section-5" class="slide level2 ssmaller">
 <h2>.</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">get_regression_points</span>(meu_modelo) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">residual=</span><span class="fu">scale</span>(residual)) <span class="sc">%&gt;%</span></span>

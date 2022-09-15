@@ -191,20 +191,24 @@ Que pode ser escrito como
 $$
 b_{1}=\frac{\operatorname{cov}(X, Y)}{\operatorname{var}(X)}
 $$
+e 
 
 $$
-\bar{Y}=b_{0}+b_{1} \bar{X}
+b_{0}=\bar{Y}-b_{1} \bar{X}
 $$
 
 ## Sob certas premissas, é possível provar que
 
 $$
 \frac{b_{1}}{s_{b_{1}}} \sim t_{n-2}
-$$ Onde $$
+$$ 
+Onde 
+
+$$
 s_{b_{1}}^{2}=\frac{s^{2}}{\sum_{i}\left(X_{i}-\bar{X}\right)^{2}} \quad s_{e}^{2}=\frac{\sum_{i} e_{i}^{2}}{n-2}
 $$
 
-Isto permite:
+## Isto permite:
 
 -- realizar teste de hipóteses com b1, como, por exemplo, testar sua significância
 
@@ -234,7 +238,7 @@ Os resíduos devem ser normais, homoscedásticos e independentes.
 
 ![](imgs/r2_explica.png)
 
-## Modelos explicativos e preditivos
+## Modelos explicativos e preditivos {.smaller}
 
 Modelos de regressão podem servir para explicar ou para prever.
 
@@ -341,7 +345,7 @@ jtools::export_summs(meu_modelo)
 GGally::ggnostic(meu_modelo)
 ```
 
-## .
+## . {.ssmaller}
 
 ```{r}
 get_regression_points(meu_modelo) %>% mutate(residual=scale(residual)) %>%
