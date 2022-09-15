@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="pt"><head>
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/tabby.min.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.0.38">
+
+  <meta name="author" content="Frederico Bertholini">
+  <title>Testes de hipótese na prática</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-captioned.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-captioned) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-captioned .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-captioned .callout-caption  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-captioned.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-captioned.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-caption {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-caption {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-caption {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-captioned .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-captioned) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-caption {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-caption {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-caption {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-caption {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-caption {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="center">
+  <h1 class="title">Testes de hipótese na prática</h1>
+  <p class="subtitle">Métodos Quantitativos Aplicados à Ciência Política</p>
+  <p class="author">Frederico Bertholini</p>
+</section>
+
+<section>
+<section id="conheça-seus-dados" class="title-slide slide level1 center">
+<h1>Conheça seus dados</h1>
+
+</section>
+<section id="lembrando-a-base-de-trabalho" class="slide level2">
+<h2>Lembrando a base de trabalho</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">summary</span>(dfe <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>id))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     media           faltas         turma               idade      
+ Min.   :40.00   Min.   : 0.00   Length:60          Min.   :18.00  
+ 1st Qu.:70.00   1st Qu.: 2.00   Class :character   1st Qu.:19.75  
+ Median :73.75   Median : 4.00   Mode  :character   Median :22.00  
+ Mean   :74.38   Mean   : 4.25                      Mean   :25.23  
+ 3rd Qu.:80.00   3rd Qu.: 6.00                      3rd Qu.:29.00  
+ Max.   :95.00   Max.   :10.00                      Max.   :49.00  
+       interess        tempocup                  escola       estcivil 
+ Secundário:24   não tem   : 4   Tudo privada       :20   Casado  :17  
+ Principal :34   até 2h    : 3   Maior parte privada:15   Solteiro:42  
+ NA's      : 2   de 2h a 4h:11   Maior parte pública:18   NA's    : 1  
+                 de 4h a 6h:42   Tudo pública       : 7                
+                 + de 6h   : 0                                         
+                                                                       
+     nota1           nota2            dif         perfil_faltas     
+ Min.   :37.00   Min.   :43.00   Min.   : 0.000   Length:60         
+ 1st Qu.:68.88   1st Qu.:71.75   1st Qu.: 2.000   Class :character  
+ Median :71.75   Median :77.25   Median : 6.000   Mode  :character  
+ Mean   :71.84   Mean   :76.91   Mean   : 5.067                     
+ 3rd Qu.:77.00   3rd Qu.:83.00   3rd Qu.: 8.000                     
+ Max.   :93.00   Max.   :98.00   Max.   :10.000                     
+ perfil_estudos    
+ Length:60         
+ Class :character  
+ Mode  :character  
+                   
+                   
+                   </code></pre>
+</div>
+</div>
+</section>
+<section id="lembrando-a-base-de-trabalho-1" class="slide level2">
+<h2>Lembrando a base de trabalho</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">summary</span>(dfe <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>id))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     media           faltas         turma               idade      
+ Min.   :40.00   Min.   : 0.00   Length:60          Min.   :18.00  
+ 1st Qu.:70.00   1st Qu.: 2.00   Class :character   1st Qu.:19.75  
+ Median :73.75   Median : 4.00   Mode  :character   Median :22.00  
+ Mean   :74.38   Mean   : 4.25                      Mean   :25.23  
+ 3rd Qu.:80.00   3rd Qu.: 6.00                      3rd Qu.:29.00  
+ Max.   :95.00   Max.   :10.00                      Max.   :49.00  
+       interess        tempocup                  escola       estcivil 
+ Secundário:24   não tem   : 4   Tudo privada       :20   Casado  :17  
+ Principal :34   até 2h    : 3   Maior parte privada:15   Solteiro:42  
+ NA's      : 2   de 2h a 4h:11   Maior parte pública:18   NA's    : 1  
+                 de 4h a 6h:42   Tudo pública       : 7                
+                 + de 6h   : 0                                         
+                                                                       
+     nota1           nota2            dif         perfil_faltas     
+ Min.   :37.00   Min.   :43.00   Min.   : 0.000   Length:60         
+ 1st Qu.:68.88   1st Qu.:71.75   1st Qu.: 2.000   Class :character  
+ Median :71.75   Median :77.25   Median : 6.000   Mode  :character  
+ Mean   :71.84   Mean   :76.91   Mean   : 5.067                     
+ 3rd Qu.:77.00   3rd Qu.:83.00   3rd Qu.: 8.000                     
+ Max.   :93.00   Max.   :98.00   Max.   :10.000                     
+ perfil_estudos    
+ Length:60         
+ Class :character  
+ Mode  :character  
+                   
+                   
+                   </code></pre>
+</div>
+</div>
+</section>
+<section id="lembrando-a-base-de-trabalho-2" class="slide level2">
+<h2>Lembrando a base de trabalho</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">summary</span>(dfe <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>id))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     media           faltas         turma               idade      
+ Min.   :40.00   Min.   : 0.00   Length:60          Min.   :18.00  
+ 1st Qu.:70.00   1st Qu.: 2.00   Class :character   1st Qu.:19.75  
+ Median :73.75   Median : 4.00   Mode  :character   Median :22.00  
+ Mean   :74.38   Mean   : 4.25                      Mean   :25.23  
+ 3rd Qu.:80.00   3rd Qu.: 6.00                      3rd Qu.:29.00  
+ Max.   :95.00   Max.   :10.00                      Max.   :49.00  
+       interess        tempocup                  escola       estcivil 
+ Secundário:24   não tem   : 4   Tudo privada       :20   Casado  :17  
+ Principal :34   até 2h    : 3   Maior parte privada:15   Solteiro:42  
+ NA's      : 2   de 2h a 4h:11   Maior parte pública:18   NA's    : 1  
+                 de 4h a 6h:42   Tudo pública       : 7                
+                 + de 6h   : 0                                         
+                                                                       
+     nota1           nota2            dif         perfil_faltas     
+ Min.   :37.00   Min.   :43.00   Min.   : 0.000   Length:60         
+ 1st Qu.:68.88   1st Qu.:71.75   1st Qu.: 2.000   Class :character  
+ Median :71.75   Median :77.25   Median : 6.000   Mode  :character  
+ Mean   :71.84   Mean   :76.91   Mean   : 5.067                     
+ 3rd Qu.:77.00   3rd Qu.:83.00   3rd Qu.: 8.000                     
+ Max.   :93.00   Max.   :98.00   Max.   :10.000                     
+ perfil_estudos    
+ Length:60         
+ Class :character  
+ Mode  :character  
+                   
+                   
+                   </code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="formalizando-hipóteses" class="title-slide slide level1 center">
+<h1>Formalizando Hipóteses</h1>
+
+</section>
+<section id="qual-o-fluxograma" class="slide level2">
+<h2>Qual o fluxograma</h2>
+
+<img data-src="imgs/fluxograma.jpg" class="r-stretch quarto-figure-center"></section>
+<section id="diferença-entre-médias-amostras-não-pareadas" class="slide level2">
+<h2>Diferença entre médias (amostras não pareadas)</h2>
+<p><span class="math inline">\(H_1:\text{Alunos com maior interesse terão notas maiores}\)</span> ou <span class="math inline">\(H_1:\mu_c-\mu_s \neq 0\)</span> ou <span class="math inline">\(H_1:\mu_c \neq \mu_s\)</span></p>
+<p>Variável <strong>dependente</strong>: Notas</p>
+<p>Variável <strong>independente</strong>: Interesse</p>
+</section>
+<section id="teste-de-médias-usando-infer--" class="slide level2">
+<h2>Teste de médias usando infer —-</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Passo 1: são normais?</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>dfe <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">drop_na</span>(interess) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">group_by</span>(interess) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">shapiro_test</span>(media)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  interess   variable statistic       p
+  &lt;ord&gt;      &lt;chr&gt;        &lt;dbl&gt;   &lt;dbl&gt;
+1 Secundário media        0.962 0.481  
+2 Principal  media        0.899 0.00440</code></pre>
+</div>
+</div>
+</section>
+<section id="graficando" class="slide level2">
+<h2>Graficando</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>dfe <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">drop_na</span>(interess) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> media,<span class="at">fill=</span>interess),<span class="at">color=</span><span class="cn">NA</span>,<span class="at">alpha=</span>.<span class="dv">5</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
+<section id="teste-de-médias-usando-infer" class="slide level2">
+<h2>Teste de médias usando infer</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Passo 2: variâncias equivalentes</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>dfe <span class="sc">%&gt;%</span> <span class="fu">leveneTest</span>(media <span class="sc">~</span> interess,.)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(&gt;F)
+group  1   0.461    0.5
+      56               </code></pre>
+</div>
+</div>
+</section>
+<section id="faz-diferença" class="slide level2">
+<h2>Faz diferença?</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>dfe <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>  infer<span class="sc">::</span><span class="fu">t_test</span>(media <span class="sc">~</span> interess)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  statistic  t_df p_value alternative estimate lower_ci upper_ci
+      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1     0.631  55.9   0.531 two.sided       1.43    -3.12     5.99</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>dfe <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>  infer<span class="sc">::</span><span class="fu">t_test</span>(media <span class="sc">~</span> interess,<span class="at">var.equal =</span> T)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  statistic  t_df p_value alternative estimate lower_ci upper_ci
+      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1     0.591    56   0.557 two.sided       1.43    -3.43     6.29</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>dfe <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>  rstatix<span class="sc">::</span><span class="fu">t_test</span>(media <span class="sc">~</span> interess,<span class="at">var.equal =</span> F)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 10
+  .y.   group1     group2       n1    n2 statistic    df     p p.adj p.adj.sig…¹
+* &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;     &lt;int&gt; &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      
+1 media Secundário Principal    24    34     0.631  55.9 0.531 0.531 ns         
+# … with abbreviated variable name ¹​p.adj.signif</code></pre>
+</div>
+</div>
+</section>
+<section id="graficando-1" class="slide level2">
+<h2>graficando</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dfe <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>         <span class="fu">drop_na</span>(interess),</span>
+<span id="cb18-3"><a href="#cb18-3"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> interess, <span class="at">y =</span> media)) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="fu">geom_dotplot</span>(<span class="at">binaxis =</span> <span class="st">"y"</span>, <span class="at">stackdir =</span> <span class="st">"center"</span>,</span>
+<span id="cb18-5"><a href="#cb18-5"></a>               <span class="at">fill=</span><span class="st">"#D8D8D8"</span>, <span class="at">color=</span><span class="st">"#D8D8D8"</span>, <span class="at">dotsize =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb18-7"><a href="#cb18-7"></a>  <span class="fu">geom_errorbar</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun.data =</span> <span class="st">"mean_se"</span>, <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb18-8"><a href="#cb18-8"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Média"</span>,<span class="at">x=</span><span class="st">"Interesse na disciplina"</span>) <span class="sc">+</span></span>
+<span id="cb18-9"><a href="#cb18-9"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb18-10"><a href="#cb18-10"></a>  <span class="fu">theme_pubr</span>()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
+<section id="teste-de-médias-usando-infer-1" class="slide level2">
+<h2>Teste de médias usando infer</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># Passo 1: são normais?</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>dfe <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">drop_na</span>(perfil_faltas) <span class="sc">%&gt;%</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="fu">group_by</span>(perfil_faltas) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href="#cb19-5"></a>  <span class="fu">shapiro_test</span>(media)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  perfil_faltas variable statistic        p
+  &lt;chr&gt;         &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;
+1 Assíduo       media        0.915 0.0172  
+2 Faltoso       media        0.851 0.000792</code></pre>
+</div>
+</div>
+</section>
+<section id="teste-de-médias-usando-infer-2" class="slide level2">
+<h2>Teste de médias usando infer</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>dfe <span class="sc">%&gt;%</span> <span class="fu">leveneTest</span>(media <span class="sc">~</span> perfil_faltas,.)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(&gt;F)
+group  1  0.2983  0.587
+      58               </code></pre>
+</div>
+</div>
+</section>
+<section id="teste" class="slide level2">
+<h2>Teste</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>dfe <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>  infer<span class="sc">::</span><span class="fu">t_test</span>(media <span class="sc">~</span> perfil_faltas)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  statistic  t_df p_value alternative estimate lower_ci upper_ci
+      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1      1.68  57.9  0.0991 two.sided       4.13   -0.803     9.06</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>dfe <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>  infer<span class="sc">::</span><span class="fu">t_test</span>(media <span class="sc">~</span> perfil_faltas,<span class="at">var.equal =</span> T)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  statistic  t_df p_value alternative estimate lower_ci upper_ci
+      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1      1.67    58   0.100 two.sided       4.13   -0.821     9.08</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>dfe <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a>  rstatix<span class="sc">::</span><span class="fu">t_test</span>(media <span class="sc">~</span> perfil_faltas,<span class="at">var.equal =</span> F)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 8
+  .y.   group1  group2     n1    n2 statistic    df      p
+* &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;int&gt; &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1 media Assíduo Faltoso    31    29      1.68  57.9 0.0991</code></pre>
+</div>
+</div>
+</section>
+<section id="graficando-2" class="slide level2">
+<h2>graficando</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> dfe,</span>
+<span id="cb29-2"><a href="#cb29-2"></a>       <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> perfil_faltas, <span class="at">y =</span> media)) <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>  <span class="fu">geom_dotplot</span>(<span class="at">binaxis =</span> <span class="st">"y"</span>, <span class="at">stackdir =</span> <span class="st">"center"</span>,</span>
+<span id="cb29-4"><a href="#cb29-4"></a>               <span class="at">fill=</span><span class="st">"#D8D8D8"</span>, <span class="at">color=</span><span class="st">"#D8D8D8"</span>, <span class="at">dotsize =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5"></a>  <span class="fu">geom_point</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb29-6"><a href="#cb29-6"></a>  <span class="fu">geom_errorbar</span>(<span class="at">stat =</span> <span class="st">"summary"</span>, <span class="at">fun.data =</span> <span class="st">"mean_se"</span>, <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb29-7"><a href="#cb29-7"></a>  <span class="fu">ylab</span>(<span class="st">"Notas"</span>) <span class="sc">+</span></span>
+<span id="cb29-8"><a href="#cb29-8"></a>  <span class="fu">xlab</span>(<span class="st">"Perfil faltas"</span>) <span class="sc">+</span></span>
+<span id="cb29-9"><a href="#cb29-9"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>), <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb29-10"><a href="#cb29-10"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size=</span><span class="dv">12</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-12-1.png" width="960" class="r-stretch"></section>
+<section id="amostras-pareadas" class="slide level2">
+<h2>Amostras pareadas</h2>
+<p>Uma mesma medição em dois momentos no tempo para os mesmos indivíduos</p>
+<p><span class="math inline">\(H_0:\mu_{t2}-\mu_{t1}=0\)</span> ou <span class="math inline">\(H_0:\mu_{\Delta}=0\)</span></p>
+<p><span class="math inline">\(H_A:\mu_{t2}-\mu_{t1}\neq0\)</span> ou <span class="math inline">\(H_A:\mu_{\Delta}\neq0\)</span></p>
+<p>Ex.:: Nota 1 e Nota 2</p>
+</section>
+<section id="com-infer" class="slide level2">
+<h2>Com infer</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>dif_mu <span class="ot">&lt;-</span> dfe <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">mutate</span>(<span class="at">d=</span>nota2<span class="sc">-</span>nota1) <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a>  <span class="fu">specify</span>(<span class="at">response =</span> d) <span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"point"</span>, <span class="at">mu =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb30-5"><a href="#cb30-5"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"t"</span>)</span>
+<span id="cb30-6"><a href="#cb30-6"></a></span>
+<span id="cb30-7"><a href="#cb30-7"></a>hipotetica <span class="ot">&lt;-</span> dfe <span class="sc">%&gt;%</span></span>
+<span id="cb30-8"><a href="#cb30-8"></a>  <span class="fu">mutate</span>(<span class="at">d=</span>nota2<span class="sc">-</span>nota1) <span class="sc">%&gt;%</span></span>
+<span id="cb30-9"><a href="#cb30-9"></a>  <span class="fu">specify</span>(<span class="at">response =</span> d) <span class="sc">%&gt;%</span></span>
+<span id="cb30-10"><a href="#cb30-10"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"point"</span>, <span class="at">mu =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb30-11"><a href="#cb30-11"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"t"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>hipotetica <span class="sc">%&gt;%</span> <span class="fu">visualize</span>(<span class="at">method=</span><span class="st">"theoretical"</span>) <span class="sc">+</span> </span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">shade_p_value</span>(dif_mu,<span class="at">direction=</span><span class="st">"two-sided"</span>) <span class="sc">+</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribuição teórica"</span>,<span class="at">x=</span><span class="st">"Estatística t"</span>,<span class="at">y=</span><span class="st">"Densidade"</span>)</span>
+<span id="cb31-4"><a href="#cb31-4"></a>dfe <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">d=</span>nota2<span class="sc">-</span>nota1) <span class="sc">%&gt;%</span>  <span class="fu">t_test</span>(d <span class="sc">~</span> <span class="cn">NULL</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualizando" class="slide level2">
+<h2>Visualizando</h2>
+<div class="cell">
+
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  .y.   group1 group2         n statistic    df        p
+* &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+1 d     1      null model    60      12.9    59 8.59e-19</code></pre>
+</div>
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-15-1.png" width="960" class="r-stretch"></section>
+<section id="por-que-anova" class="slide level2">
+<h2>Por que ANOVA?</h2>
+<p><span class="math display">\[
+H_{0}: \mu_{1}=\mu_{2}=\cdots=\mu_{k}, \quad H_{A}: \mu_{i} \neq \mu_{j} \text{ para pelo menos um par } i \text{ e } j
+\]</span></p>
+</section>
+<section id="o-que-é-anova" class="slide level2">
+<h2>O que é ANOVA?</h2>
+<p>Variabilidade dentro dos grupos = Soma dos Quadrados Dentro (SQD)</p>
+<p><span class="math display">\[
+S Q D=\sum_{j=1}^{c} \sum_{i=1}^{n_{j}}\left(X_{i j}-\bar{X}_{j}\right)^{2}
+\]</span></p>
+<p>Variabilidade entre grupos = Soma de Quadrados Entre (SQE)</p>
+<p><span class="math display">\[
+S Q E=\sum_{j=1}^{c} n_{j}\left(\bar{X}_{j}-\overline{\bar{X}}\right)^{2}
+\]</span></p>
+<p>Variabilidade total = Soma Total de Quadrados (STQ)</p>
+<p><span class="math display">\[
+S T Q=\sum_{j=1}^{c} \sum_{i=1}^{n_{j}}\left(X_{i j}-\overline{\bar{X}}\right)^{2}
+\]</span></p>
+</section>
+<section id="anova" class="slide level2">
+<h2>ANOVA</h2>
+<p><span class="math inline">\(\text{STQ} = \text{SQE} + \text{SQD}\)</span></p>
+<p>Fração da variabilidade explicada pelo grupo =</p>
+<p><span class="math inline">\(\frac{\text{SQE}}{\text{STQ}}\)</span></p>
+<p>É possível que, na população, as médias dos grupos sejam iguais e, por acaso, as médias das amostras sejam diferentes.</p>
+<p>Quanto maior a variabilidade entre grupos (SQE) e menor a variabilidade dentro dos grupos (SQD), mais evidências teremos que as médias são diferentes na população.</p>
+<p>Princípio: Teste F: <span class="math inline">\(\frac{\text{Variância entre grupos}}{\text{Variância dentro dos grupos}}\)</span></p>
+<p><span class="math inline">\(F = \frac{\text{MQE}}{\text{MQD}}\)</span></p>
+</section>
+<section id="na-prática" class="slide level2">
+<h2>Na prática</h2>
+<p><span class="math inline">\(H_0:\text{A média de notas das turmas é igual}\)</span> ou <span class="math inline">\(H_0:\mu_\text{3joad}=\mu_\text{3joan}=\mu_\text{5joan}\)</span></p>
+<p><span class="math inline">\(H_A:\text{A média de notas de pelo menos uma das turmas é diferente}\)</span> ou <span class="math inline">\(H_A:\mu_\text{3joad} \neq \mu_\text{3joan} \neq \mu_\text{5joan}\)</span></p>
+<p>Variável dependente: <strong>Notas</strong></p>
+<p>Variável independente: <strong>Turma</strong></p>
+</section>
+<section id="função-aov" class="slide level2">
+<h2>Função aov</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>ANOVAtest <span class="ot">&lt;-</span> dfe <span class="sc">%&gt;%</span> <span class="fu">aov</span>(.,<span class="at">formula =</span> media <span class="sc">~</span> turma)</span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="fu">summary</span>(ANOVAtest)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)  
+turma        2    703   351.5   4.116 0.0214 *
+Residuals   57   4867    85.4                 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="teste-de-tukey" class="slide level2">
+<h2>Teste de Tukey</h2>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>Tt <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(ANOVAtest)</span>
+<span id="cb35-2"><a href="#cb35-2"></a>Tt<span class="sc">$</span>turma <span class="sc">%&gt;%</span> <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb35-3"><a href="#cb35-3"></a>  <span class="fu">rownames_to_column</span>() <span class="sc">%&gt;%</span>  <span class="fu">mutate</span>(<span class="at">rowname =</span> <span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,<span class="st">""</span>,rowname)) <span class="sc">%&gt;%</span></span>
+<span id="cb35-4"><a href="#cb35-4"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">""</span>,<span class="st">"Dif."</span>,<span class="st">"Lim inf"</span>,<span class="st">"Lim sup"</span>,<span class="st">"p-valor"</span>),</span>
+<span id="cb35-5"><a href="#cb35-5"></a>               <span class="at">digits=</span><span class="dv">3</span>,<span class="at">format =</span> <span class="st">"latex"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+</div>
+</section>
+<section id="anova-com-infer" class="slide level2">
+<h2>ANOVA com infer</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>observed_f_statistic <span class="ot">&lt;-</span> dfe <span class="sc">%&gt;%</span> </span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="fu">specify</span>(media <span class="sc">~</span> turma) <span class="sc">%&gt;%</span></span>
+<span id="cb36-3"><a href="#cb36-3"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"F"</span>)</span>
+<span id="cb36-4"><a href="#cb36-4"></a></span>
+<span id="cb36-5"><a href="#cb36-5"></a>dfe <span class="sc">%&gt;%</span> </span>
+<span id="cb36-6"><a href="#cb36-6"></a>  <span class="fu">specify</span>(media <span class="sc">~</span> turma) <span class="sc">%&gt;%</span></span>
+<span id="cb36-7"><a href="#cb36-7"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-8"><a href="#cb36-8"></a>  <span class="fu">visualize</span>(<span class="at">method =</span> <span class="st">"theoretical"</span>) <span class="sc">+</span> </span>
+<span id="cb36-9"><a href="#cb36-9"></a>  <span class="fu">shade_p_value</span>(observed_f_statistic,</span>
+<span id="cb36-10"><a href="#cb36-10"></a>                <span class="at">direction =</span> <span class="st">"greater"</span>)</span>
+<span id="cb36-11"><a href="#cb36-11"></a></span>
+<span id="cb36-12"><a href="#cb36-12"></a>dfe <span class="sc">%&gt;%</span> </span>
+<span id="cb36-13"><a href="#cb36-13"></a>  <span class="fu">specify</span>(media <span class="sc">~</span> turma) <span class="sc">%&gt;%</span></span>
+<span id="cb36-14"><a href="#cb36-14"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-15"><a href="#cb36-15"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">100</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-16"><a href="#cb36-16"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"F"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-17"><a href="#cb36-17"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> observed_f_statistic,</span>
+<span id="cb36-18"><a href="#cb36-18"></a>              <span class="at">direction =</span> <span class="st">"greater"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<div class="cell">
+
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  p_value
+    &lt;dbl&gt;
+1    0.04</code></pre>
+</div>
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-19-1.png" width="960" class="r-stretch"></section>
+<section id="anova-com-ggpubr-1" class="slide level2">
+<h2>Anova com ggpubr 1</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>dfe <span class="sc">%&gt;%</span> </span>
+<span id="cb38-2"><a href="#cb38-2"></a> <span class="fu">ggboxplot</span>(<span class="at">x =</span> <span class="st">"turma"</span>, <span class="at">y =</span> <span class="st">"media"</span>,<span class="at">color =</span> <span class="st">"turma"</span>, <span class="at">palette =</span> <span class="st">"npg"</span>)<span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a> <span class="fu">stat_compare_means</span>(<span class="at">comparisons =</span> </span>
+<span id="cb38-4"><a href="#cb38-4"></a>                      <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"3joad"</span>,<span class="st">"3joan"</span>),<span class="fu">c</span>(<span class="st">"3joan"</span>,<span class="st">"5joan"</span>),<span class="fu">c</span>(<span class="st">"3joad"</span>, <span class="st">"5joan"</span>)), </span>
+<span id="cb38-5"><a href="#cb38-5"></a>                    <span class="at">label.y =</span> <span class="fu">c</span>(<span class="dv">110</span>, <span class="dv">105</span>, <span class="dv">100</span>))<span class="sc">+</span><span class="fu">stat_compare_means</span>(<span class="at">label.y =</span> <span class="dv">120</span>)    </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-20-1.png" width="960" class="r-stretch"></section>
+<section id="anova-com-ggpubr-2" class="slide level2">
+<h2>Anova com ggpubr 2</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="co"># Multiple pairwise test against a reference group</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a>dfe <span class="sc">%&gt;%</span> </span>
+<span id="cb39-3"><a href="#cb39-3"></a> <span class="fu">ggboxplot</span>(<span class="at">x =</span> <span class="st">"turma"</span>, <span class="at">y =</span> <span class="st">"media"</span>,<span class="at">color =</span> <span class="st">"turma"</span>, <span class="at">palette =</span> <span class="st">"npg"</span>)<span class="sc">+</span></span>
+<span id="cb39-4"><a href="#cb39-4"></a> <span class="fu">stat_compare_means</span>(<span class="at">method =</span> <span class="st">"anova"</span>, <span class="at">label.y =</span> <span class="dv">120</span>)<span class="sc">+</span> </span>
+<span id="cb39-5"><a href="#cb39-5"></a> <span class="fu">stat_compare_means</span>(<span class="fu">aes</span>(<span class="at">label =</span> ..p.signif..),<span class="at">method =</span> <span class="st">"t.test"</span>, <span class="at">ref.group =</span> <span class="st">"3joad"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-21-1.png" width="960" class="r-stretch"></section>
+<section id="two-way-anova-dois-fatores" class="slide level2">
+<h2>Two-way ANOVA (dois fatores)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">summary</span>(ANOVAtest2 <span class="ot">&lt;-</span> dfe <span class="sc">%&gt;%</span> <span class="fu">aov</span>(.,<span class="at">formula =</span> media <span class="sc">~</span> turma <span class="sc">+</span> interess))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+turma        2   1016   508.1   7.521 0.00131 **
+interess     1      2     1.6   0.024 0.87840   
+Residuals   54   3648    67.6                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+2 observations deleted due to missingness</code></pre>
+</div>
+</div>
+</section>
+<section id="two-way-anova-dois-fatores-1" class="slide level2">
+<h2>Two-way ANOVA (dois fatores)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">library</span>(agricolae); <span class="fu">HSD.test</span>(ANOVAtest2, <span class="at">trt =</span> <span class="fu">c</span>(<span class="st">"turma"</span>,<span class="st">"interess"</span>),<span class="at">console =</span> T)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Study: ANOVAtest2 ~ c("turma", "interess")
+
+HSD Test for media 
+
+Mean Square Error:  67.5601 
+
+turma:interess,  means
+
+                    media       std  r  Min  Max
+3joad:Principal  82.77778  9.052317  9 70.0 95.0
+3joad:Secundário 78.88889  7.817360  9 65.0 90.0
+3joan:Principal  68.95833 12.082027 12 40.0 80.0
+3joan:Secundário 74.16667  4.082483  6 70.0 80.0
+5joan:Principal  73.07692  4.466758 13 67.5 82.5
+5joan:Secundário 73.33333  7.071068  9 62.5 85.0
+
+Alpha: 0.05 ; DF Error: 54 
+Critical Value of Studentized Range: 4.178265 
+
+Groups according to probability of means differences and alpha level( 0.05 )
+
+Treatments with the same letter are not significantly different.
+
+                    media groups
+3joad:Principal  82.77778      a
+3joad:Secundário 78.88889     ab
+3joan:Secundário 74.16667     ab
+5joan:Secundário 73.33333     ab
+5joan:Principal  73.07692     ab
+3joan:Principal  68.95833      b</code></pre>
+</div>
+</div>
+</section>
+<section id="homogeneidade" class="slide level2">
+<h2>Homogeneidade</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">plot</span>(ANOVAtest2, <span class="dv">1</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">library</span>(car);<span class="fu">leveneTest</span>(media <span class="sc">~</span> turma <span class="sc">*</span> interess, <span class="at">data =</span> dfe)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+      Df F value Pr(&gt;F)
+group  5  0.8897 0.4948
+      52               </code></pre>
+</div>
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-24-1.png" width="960" class="r-stretch"></section>
+<section id="normalidade" class="slide level2">
+<h2>Normalidade</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">plot</span>(ANOVAtest2,<span class="dv">2</span>); <span class="fu">shapiro.test</span>(<span class="at">x =</span> <span class="fu">residuals</span>(<span class="at">object =</span> ANOVAtest2))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  residuals(object = ANOVAtest2)
+W = 0.9331, p-value = 0.003273</code></pre>
+</div>
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"></section></section>
+<section>
+<section id="testes-não-paramétricos" class="title-slide slide level1 center">
+<h1>Testes não paramétricos</h1>
+
+</section>
+<section id="dicussão" class="slide level2">
+<h2>Dicussão</h2>
+<ul>
+<li><p>Para quê?</p></li>
+<li><p>QUão importantes são os pressupostos?</p></li>
+</ul>
+<p>E se os pressupostos falharem?</p>
+</section>
+<section id="pressupostos" class="slide level2">
+<h2>Pressupostos</h2>
+<p>O teste-t independente apresenta dois pressupostos:</p>
+<ul>
+<li>Normalidade da variável dependente em cada grupo</li>
+<li>Homogeneidade de variâncias (ou seja, grupos com variâncias homogêneas)</li>
+</ul>
+<p>Para checar a normalidade podemos usar o teste de Shapiro-Wilk, aplicado a cada grupo (shapiro_test)</p>
+</section></section>
+<section>
+<section id="teste-de-mann-whitney" class="title-slide slide level1 center">
+<h1>Teste de Mann-Whitney</h1>
+
+</section>
+<section id="realização-do-teste-de-mann-whitney" class="slide level2">
+<h2>Realização do teste de Mann-Whitney</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">wilcox.test</span>(media <span class="sc">~</span> estcivil, <span class="at">data =</span> dfe <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>(estcivil))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon rank sum test with continuity correction
+
+data:  media by estcivil
+W = 293, p-value = 0.2826
+alternative hypothesis: true location shift is not equal to 0</code></pre>
+</div>
+</div>
+</section>
+<section id="análise-descritiva-dos-dfe" class="slide level2">
+<h2>Análise descritiva dos dfe</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>dfe <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(estcivil) <span class="sc">%&gt;%</span> </span>
+<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">get_summary_stats</span>(media, <span class="at">type =</span> <span class="st">"median_iqr"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  estcivil variable     n median   iqr
+  &lt;fct&gt;    &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 Casado   media       17   72.5   7.5
+2 Solteiro media       42   76.2  10  
+3 &lt;NA&gt;     media        1   70     0  </code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="teste-de-wilcoxon" class="title-slide slide level1 center">
+<h1>Teste de Wilcoxon</h1>
+
+</section>
+<section id="realização-do-teste-de-wilcoxon" class="slide level2">
+<h2>Realização do teste de Wilcoxon</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="fu">wilcox.test</span>(dfe<span class="sc">$</span>nota1, dfe<span class="sc">$</span>nota2, <span class="at">paired =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Wilcoxon signed rank test with continuity correction
+
+data:  dfe$nota1 and dfe$nota2
+V = 0, p-value = 1.94e-10
+alternative hypothesis: true location shift is not equal to 0</code></pre>
+</div>
+</div>
+</section>
+<section id="análise-descritiva" class="slide level2">
+<h2>Análise descritiva</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>dfe <span class="sc">%&gt;%</span> </span>
+<span id="cb55-2"><a href="#cb55-2"></a>  <span class="fu">get_summary_stats</span>(nota1, nota2, dif, <span class="at">type =</span> <span class="st">"median_iqr"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  variable     n median   iqr
+  &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+1 dif         60    6    6   
+2 nota1       60   71.8  8.12
+3 nota2       60   77.2 11.2 </code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="teste-de-kruskal-wallis" class="title-slide slide level1 center">
+<h1>Teste de Kruskal-Wallis</h1>
+
+</section>
+<section id="realização-do-teste-de-kruskal-wallis" class="slide level2">
+<h2>Realização do teste de Kruskal-Wallis</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a><span class="fu">kruskal.test</span>(media <span class="sc">~</span> turma, <span class="at">data =</span> dfe)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Kruskal-Wallis rank sum test
+
+data:  media by turma
+Kruskal-Wallis chi-squared = 9.6734, df = 2, p-value = 0.007933</code></pre>
+</div>
+</div>
+</section>
+<section id="testes-de-post-hoc" class="slide level2">
+<h2>Testes de post-hoc</h2>
+<p>Teste de Dunn com ajuste do valor de p</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="fu">dunn_test</span>(media <span class="sc">~</span> turma, <span class="at">data =</span> dfe, <span class="at">p.adjust.method =</span> <span class="st">"bonferroni"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 9
+  .y.   group1 group2    n1    n2 statistic       p  p.adj p.adj.signif
+* &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;       
+1 media 3joad  3joan     20    18   -2.59   0.00947 0.0284 *           
+2 media 3joad  5joan     20    22   -2.78   0.00544 0.0163 *           
+3 media 3joan  5joan     18    22   -0.0497 0.960   1      ns          </code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="estimation-plot" class="title-slide slide level1 center">
+<h1>Estimation plot</h1>
+
+</section>
+<section id="dois-grupos-não-pareados" class="slide level2">
+<h2>Dois grupos não pareados</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>two.group.unpaired <span class="ot">&lt;-</span> </span>
+<span id="cb61-2"><a href="#cb61-2"></a>  dfe <span class="sc">%&gt;%</span></span>
+<span id="cb61-3"><a href="#cb61-3"></a>  <span class="fu">dabest</span>(perfil_faltas, media, </span>
+<span id="cb61-4"><a href="#cb61-4"></a>         <span class="co"># The idx below passes "Control" as the control group, </span></span>
+<span id="cb61-5"><a href="#cb61-5"></a>         <span class="co"># and "Group1" as the test group. The mean difference</span></span>
+<span id="cb61-6"><a href="#cb61-6"></a>         <span class="co"># will be computed as mean(Group1) - mean(Control1).</span></span>
+<span id="cb61-7"><a href="#cb61-7"></a>         <span class="at">idx =</span> <span class="fu">c</span>(<span class="st">"Faltoso"</span>, <span class="st">"Assíduo"</span>), </span>
+<span id="cb61-8"><a href="#cb61-8"></a>         <span class="at">paired =</span> <span class="cn">FALSE</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="calling-the-object-automatically-prints-out-a-summary." class="slide level2">
+<h2>Calling the object automatically prints out a summary.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>two.group.unpaired </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>dabestr (Data Analysis with Bootstrap Estimation in R) v0.3.0
+=============================================================
+
+Good morning!
+The current time is 10:48  on quinta-feira setembro 08, 2022.
+
+Dataset    :  .
+The first five rows are:
+# A tibble: 5 × 14
+  id    media faltas turma idade interess   tempocup  escola estci…¹ nota1 nota2
+  &lt;fct&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;ord&gt;      &lt;ord&gt;     &lt;ord&gt;  &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1 1        70      2 3joad    18 Principal  de 2h a … Maior… Soltei…    69    71
+2 2        65      4 3joad    19 Secundário de 4h a … Maior… Soltei…    62    68
+3 3        80      2 3joad    19 Secundário de 4h a … Maior… Casado     75    85
+4 4        95      2 3joad    22 Principal  de 2h a … Maior… Soltei…    93    97
+5 5        70      2 3joad    20 Secundário de 2h a … Maior… Casado     69    71
+# … with 3 more variables: dif &lt;dbl&gt;, perfil_faltas &lt;fct&gt;,
+#   perfil_estudos &lt;chr&gt;, and abbreviated variable name ¹​estcivil
+# ℹ Use `colnames()` to see all variable names
+
+X Variable :  perfil_faltas
+Y Variable :  media
+
+Effect sizes(s) will be computed for:
+  1. Assíduo minus Faltoso</code></pre>
+</div>
+</div>
+</section>
+<section id="calling-the-above-object-produces-a-textual-summary-of-the-computed-effect-size." class="slide level2">
+<h2>Calling the above object produces a textual summary of the computed effect size.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>two.group.unpaired.meandiff <span class="ot">&lt;-</span> <span class="fu">mean_diff</span>(two.group.unpaired)</span>
+<span id="cb64-2"><a href="#cb64-2"></a>two.group.unpaired.meandiff</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>dabestr (Data Analysis with Bootstrap Estimation in R) v0.3.0
+=============================================================
+
+Good morning!
+The current time is 10:48  on quinta-feira setembro 08, 2022.
+
+Dataset    :  .
+X Variable :  perfil_faltas
+Y Variable :  media
+
+Unpaired mean difference of Assíduo (n = 31) minus Faltoso (n = 29)
+ 4.13 [95CI  -0.514; 9.07]
+
+
+5000 bootstrap resamples.
+All confidence intervals are bias-corrected and accelerated.</code></pre>
+</div>
+</div>
+</section>
+<section id="figura" class="slide level2">
+<h2>Figura</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>two.group.unpaired <span class="sc">%&gt;%</span> dabestr<span class="sc">::</span><span class="fu">cohens_d</span>() <span class="sc">%&gt;%</span> <span class="fu">plot</span>()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-35-1.png" width="960" class="r-stretch"></section>
+<section id="dois-grupos-não-pareados-1" class="slide level2">
+<h2>dois grupos não pareados</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>two.group.unpaired2 <span class="ot">&lt;-</span> </span>
+<span id="cb67-2"><a href="#cb67-2"></a>  dfe <span class="sc">%&gt;%</span></span>
+<span id="cb67-3"><a href="#cb67-3"></a>  <span class="fu">dabest</span>(interess, media, </span>
+<span id="cb67-4"><a href="#cb67-4"></a>         <span class="co"># The idx below passes "Control" as the control group, </span></span>
+<span id="cb67-5"><a href="#cb67-5"></a>         <span class="co"># and "Group1" as the test group. The mean difference</span></span>
+<span id="cb67-6"><a href="#cb67-6"></a>         <span class="co"># will be computed as mean(Group1) - mean(Control1).</span></span>
+<span id="cb67-7"><a href="#cb67-7"></a>         <span class="at">idx =</span> <span class="fu">c</span>(<span class="st">"Principal"</span>, <span class="st">"Secundário"</span>), </span>
+<span id="cb67-8"><a href="#cb67-8"></a>         <span class="at">paired =</span> <span class="cn">FALSE</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="calling-the-object-automatically-prints-out-a-summary.-1" class="slide level2">
+<h2>Calling the object automatically prints out a summary.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a>two.group.unpaired2 </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>dabestr (Data Analysis with Bootstrap Estimation in R) v0.3.0
+=============================================================
+
+Good morning!
+The current time is 10:48  on quinta-feira setembro 08, 2022.
+
+Dataset    :  .
+The first five rows are:
+# A tibble: 5 × 14
+  id    media faltas turma idade interess   tempocup  escola estci…¹ nota1 nota2
+  &lt;fct&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;ord&gt;      &lt;ord&gt;     &lt;ord&gt;  &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1 1        70      2 3joad    18 Principal  de 2h a … Maior… Soltei…    69    71
+2 2        65      4 3joad    19 Secundário de 4h a … Maior… Soltei…    62    68
+3 3        80      2 3joad    19 Secundário de 4h a … Maior… Casado     75    85
+4 4        95      2 3joad    22 Principal  de 2h a … Maior… Soltei…    93    97
+5 5        70      2 3joad    20 Secundário de 2h a … Maior… Casado     69    71
+# … with 3 more variables: dif &lt;dbl&gt;, perfil_faltas &lt;chr&gt;,
+#   perfil_estudos &lt;chr&gt;, and abbreviated variable name ¹​estcivil
+# ℹ Use `colnames()` to see all variable names
+
+X Variable :  interess
+Y Variable :  media
+
+Effect sizes(s) will be computed for:
+  1. Secundário minus Principal</code></pre>
+</div>
+</div>
+</section>
+<section id="figura-1" class="slide level2">
+<h2>Figura</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>two.group.unpaired2 <span class="sc">%&gt;%</span> dabestr<span class="sc">::</span><span class="fu">cohens_d</span>() <span class="sc">%&gt;%</span> <span class="fu">plot</span>()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-38-1.png" width="960" class="r-stretch"></section>
+<section id="dois-grupos-não-pareados-2" class="slide level2">
+<h2>Dois grupos não pareados</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a>two.group.unpaired3 <span class="ot">&lt;-</span> </span>
+<span id="cb71-2"><a href="#cb71-2"></a>  dfe <span class="sc">%&gt;%</span></span>
+<span id="cb71-3"><a href="#cb71-3"></a>  <span class="fu">dabest</span>(perfil_estudos, media, </span>
+<span id="cb71-4"><a href="#cb71-4"></a>         <span class="co"># The idx below passes "Control" as the control group, </span></span>
+<span id="cb71-5"><a href="#cb71-5"></a>         <span class="co"># and "Group1" as the test group. The mean difference</span></span>
+<span id="cb71-6"><a href="#cb71-6"></a>         <span class="co"># will be computed as mean(Group1) - mean(Control1).</span></span>
+<span id="cb71-7"><a href="#cb71-7"></a>         <span class="at">idx =</span> <span class="fu">c</span>(<span class="st">"Conjunto"</span>, <span class="st">"Individual"</span>), </span>
+<span id="cb71-8"><a href="#cb71-8"></a>         <span class="at">paired =</span> <span class="cn">FALSE</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="calling-the-object-automatically-prints-out-a-summary.-2" class="slide level2">
+<h2>Calling the object automatically prints out a summary.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a>two.group.unpaired3 </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>dabestr (Data Analysis with Bootstrap Estimation in R) v0.3.0
+=============================================================
+
+Good morning!
+The current time is 10:48  on quinta-feira setembro 08, 2022.
+
+Dataset    :  .
+The first five rows are:
+# A tibble: 5 × 14
+  id    media faltas turma idade interess   tempocup  escola estci…¹ nota1 nota2
+  &lt;fct&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;ord&gt;      &lt;ord&gt;     &lt;ord&gt;  &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1 1        70      2 3joad    18 Principal  de 2h a … Maior… Soltei…    69    71
+2 2        65      4 3joad    19 Secundário de 4h a … Maior… Soltei…    62    68
+3 3        80      2 3joad    19 Secundário de 4h a … Maior… Casado     75    85
+4 4        95      2 3joad    22 Principal  de 2h a … Maior… Soltei…    93    97
+5 5        70      2 3joad    20 Secundário de 2h a … Maior… Casado     69    71
+# … with 3 more variables: dif &lt;dbl&gt;, perfil_faltas &lt;chr&gt;,
+#   perfil_estudos &lt;fct&gt;, and abbreviated variable name ¹​estcivil
+# ℹ Use `colnames()` to see all variable names
+
+X Variable :  perfil_estudos
+Y Variable :  media
+
+Effect sizes(s) will be computed for:
+  1. Individual minus Conjunto</code></pre>
+</div>
+</div>
+</section>
+<section id="figura-2" class="slide level2">
+<h2>Figura</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a>two.group.unpaired3 <span class="sc">%&gt;%</span> dabestr<span class="sc">::</span><span class="fu">cohens_d</span>() <span class="sc">%&gt;%</span> <span class="fu">plot</span>()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-41-1.png" width="960" class="r-stretch"></section>
+<section id="dois-grupos-pareados--" class="slide level2">
+<h2>Dois grupos pareados —-</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a>two.group.paired <span class="ot">&lt;-</span> </span>
+<span id="cb75-2"><a href="#cb75-2"></a>  dfe <span class="sc">%&gt;%</span></span>
+<span id="cb75-3"><a href="#cb75-3"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(id,nota1,nota2) <span class="sc">%&gt;%</span></span>
+<span id="cb75-4"><a href="#cb75-4"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span>id,<span class="at">names_to =</span> <span class="st">"grupo"</span>,<span class="at">values_to =</span> <span class="st">"medida"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb75-5"><a href="#cb75-5"></a>  <span class="fu">dabest</span>(grupo, medida, </span>
+<span id="cb75-6"><a href="#cb75-6"></a>         <span class="at">idx =</span> <span class="fu">c</span>(<span class="st">"nota1"</span>, <span class="st">"nota2"</span>), </span>
+<span id="cb75-7"><a href="#cb75-7"></a>         <span class="at">paired =</span> <span class="cn">TRUE</span>, <span class="at">id.col =</span> id)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="the-summary-indicates-this-is-a-paired-comparison." class="slide level2">
+<h2>The summary indicates this is a paired comparison.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a>two.group.paired</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>dabestr (Data Analysis with Bootstrap Estimation in R) v0.3.0
+=============================================================
+
+Good morning!
+The current time is 10:48  on quinta-feira setembro 08, 2022.
+
+Dataset    :  .
+The first five rows are:
+# A tibble: 5 × 3
+  id    grupo medida
+  &lt;fct&gt; &lt;fct&gt;  &lt;dbl&gt;
+1 1     nota1     69
+2 1     nota2     71
+3 2     nota1     62
+4 2     nota2     68
+5 3     nota1     75
+
+X Variable :  grupo
+Y Variable :  medida
+
+Paired effect size(s) will be computed for:
+  1. nota2 minus nota1</code></pre>
+</div>
+</div>
+</section>
+<section id="create-a-paired-plot." class="slide level2">
+<h2>Create a paired plot.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a>two.group.paired <span class="sc">%&gt;%</span> </span>
+<span id="cb78-2"><a href="#cb78-2"></a>  <span class="fu">mean_diff</span>()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>dabestr (Data Analysis with Bootstrap Estimation in R) v0.3.0
+=============================================================
+
+Good morning!
+The current time is 10:48  on quinta-feira setembro 08, 2022.
+
+Dataset    :  .
+X Variable :  grupo
+Y Variable :  medida
+
+Paired mean difference of nota2 (n = 60) minus nota1 (n = 60)
+ 5.07 [95CI  1.71; 8.69]
+
+
+5000 bootstrap resamples.
+All confidence intervals are bias-corrected and accelerated.</code></pre>
+</div>
+</div>
+</section>
+<section id="create-a-paired-plot.-1" class="slide level2">
+<h2>Create a paired plot.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a>two.group.paired <span class="sc">%&gt;%</span> </span>
+<span id="cb80-2"><a href="#cb80-2"></a>  <span class="fu">mean_diff</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb80-3"><a href="#cb80-3"></a>  <span class="fu">plot</span>()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-45-1.png" width="960" class="r-stretch"></section></section>
+<section>
+<section id="testando-diferentes-hipóteses" class="title-slide slide level1 center">
+<h1>Testando diferentes hipóteses</h1>
+
+</section>
+<section id="qui-quadrado" class="slide level2">
+<h2>Qui-quadrado</h2>
+<p>Vamos olhar as relações entre:</p>
+<ol type="1">
+<li><p>Estado civil e interesse na disciplina.</p></li>
+<li><p>Interesse na disciplina e turma.</p></li>
+</ol>
+<p>Teste de independência entre variáveis categóricas.</p>
+<p><span class="math inline">\(H_0:\text{Variáveis são independentes}\)</span></p>
+<p><span class="math inline">\(H_A:\text{Variáveis não são independentes}\)</span></p>
+</section>
+<section id="tabelas-de-contingência-e-qui-quadrado" class="slide level2">
+<h2>Tabelas de contingência e Qui-quadrado</h2>
+<p>Atenção à sua variável de interesse</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a>dfe <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>(estcivil,interess) <span class="sc">%&gt;%</span></span>
+<span id="cb81-2"><a href="#cb81-2"></a>  <span class="fu">tabyl</span>(estcivil,interess)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> estcivil Secundário Principal
+   Casado          5        12
+ Solteiro         18        22</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a>dfe <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>(estcivil,interess) <span class="sc">%&gt;%</span></span>
+<span id="cb83-2"><a href="#cb83-2"></a>  <span class="fu">tabyl</span>(estcivil,interess) <span class="sc">%&gt;%</span> </span>
+<span id="cb83-3"><a href="#cb83-3"></a>  janitor<span class="sc">::</span><span class="fu">adorn_percentages</span>(<span class="st">"col"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb83-4"><a href="#cb83-4"></a>  janitor<span class="sc">::</span><span class="fu">adorn_pct_formatting</span>()</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> estcivil Secundário Principal
+   Casado      21.7%     35.3%
+ Solteiro      78.3%     64.7%</code></pre>
+</div>
+</div>
+</section>
+<section id="no-infer" class="slide level2">
+<h2>No infer</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1"></a>qui_quadrado <span class="ot">&lt;-</span> dfe <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>(estcivil,interess) <span class="sc">%&gt;%</span></span>
+<span id="cb85-2"><a href="#cb85-2"></a>   <span class="fu">mutate_if</span>(is.factor,as.character) <span class="sc">%&gt;%</span> </span>
+<span id="cb85-3"><a href="#cb85-3"></a>  <span class="fu">specify</span>(interess <span class="sc">~</span> estcivil,<span class="at">success =</span> <span class="st">"Principal"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb85-4"><a href="#cb85-4"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"Chisq"</span>)</span>
+<span id="cb85-5"><a href="#cb85-5"></a></span>
+<span id="cb85-6"><a href="#cb85-6"></a>teorica_qui_quadrado <span class="ot">&lt;-</span> dfe <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>(estcivil,interess) <span class="sc">%&gt;%</span></span>
+<span id="cb85-7"><a href="#cb85-7"></a>  <span class="fu">mutate_if</span>(is.factor,as.character) <span class="sc">%&gt;%</span> </span>
+<span id="cb85-8"><a href="#cb85-8"></a>  <span class="fu">specify</span>(interess <span class="sc">~</span> estcivil,<span class="at">success =</span> <span class="st">"Principal"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb85-9"><a href="#cb85-9"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualizando-1" class="slide level2">
+<h2>Visualizando</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a>teorica_qui_quadrado  <span class="sc">%&gt;%</span></span>
+<span id="cb86-2"><a href="#cb86-2"></a>  <span class="fu">visualize</span>(<span class="at">method =</span> <span class="st">"theoretical"</span>) <span class="sc">+</span> </span>
+<span id="cb86-3"><a href="#cb86-3"></a>  <span class="fu">shade_p_value</span>(qui_quadrado,</span>
+<span id="cb86-4"><a href="#cb86-4"></a>                <span class="at">direction =</span> <span class="st">"greater"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-48-1.png" width="960" class="r-stretch"></section>
+<section id="o-teste" class="slide level2">
+<h2>O teste</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1"></a>dfe <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>(estcivil,interess) <span class="sc">%&gt;%</span></span>
+<span id="cb87-2"><a href="#cb87-2"></a>  <span class="fu">mutate</span>(<span class="at">estcivil=</span><span class="fu">as.character</span>(estcivil),<span class="at">interess=</span><span class="fu">as.character</span>(interess)) <span class="sc">%&gt;%</span> </span>
+<span id="cb87-3"><a href="#cb87-3"></a>  infer<span class="sc">::</span><span class="fu">chisq_test</span>(interess <span class="sc">~</span> estcivil)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+  statistic chisq_df p_value
+      &lt;dbl&gt;    &lt;int&gt;   &lt;dbl&gt;
+1     0.644        1   0.422</code></pre>
+</div>
+</div>
+</section>
+<section id="tabelas-de-contingência-e-qui-quadrado-1" class="slide level2">
+<h2>Tabelas de contingência e Qui-quadrado</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1"></a>dfe <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>(turma,interess) <span class="sc">%&gt;%</span></span>
+<span id="cb89-2"><a href="#cb89-2"></a>  <span class="fu">tabyl</span>(turma,interess)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> turma Secundário Principal
+ 3joad          9         9
+ 3joan          6        12
+ 5joan          9        13</code></pre>
+</div>
+</div>
+</section>
+<section id="no-infer-1" class="slide level2">
+<h2>No infer</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1"></a>qui_quadrado <span class="ot">&lt;-</span> dfe <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>(turma,interess) <span class="sc">%&gt;%</span></span>
+<span id="cb91-2"><a href="#cb91-2"></a>  <span class="fu">mutate_if</span>(is.factor,as.character) <span class="sc">%&gt;%</span> </span>
+<span id="cb91-3"><a href="#cb91-3"></a>  <span class="fu">specify</span>(interess <span class="sc">~</span> turma) <span class="sc">%&gt;%</span></span>
+<span id="cb91-4"><a href="#cb91-4"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"Chisq"</span>)</span>
+<span id="cb91-5"><a href="#cb91-5"></a></span>
+<span id="cb91-6"><a href="#cb91-6"></a>teorica_qui_quadrado <span class="ot">&lt;-</span> dfe <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>(turma,interess) <span class="sc">%&gt;%</span></span>
+<span id="cb91-7"><a href="#cb91-7"></a>  <span class="fu">mutate_if</span>(is.factor,as.character) <span class="sc">%&gt;%</span> </span>
+<span id="cb91-8"><a href="#cb91-8"></a>  <span class="fu">specify</span>(interess <span class="sc">~</span> turma) <span class="sc">%&gt;%</span></span>
+<span id="cb91-9"><a href="#cb91-9"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) </span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualizando-2" class="slide level2">
+<h2>Visualizando</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1"></a>teorica_qui_quadrado <span class="sc">%&gt;%</span></span>
+<span id="cb92-2"><a href="#cb92-2"></a>  <span class="fu">visualize</span>(<span class="at">method =</span> <span class="st">"theoretical"</span>) <span class="sc">+</span> </span>
+<span id="cb92-3"><a href="#cb92-3"></a>  <span class="fu">shade_p_value</span>(qui_quadrado,</span>
+<span id="cb92-4"><a href="#cb92-4"></a>                <span class="at">direction =</span> <span class="st">"greater"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-52-1.png" width="960" class="r-stretch"></section>
+<section id="o-teste-1" class="slide level2">
+<h2>O teste</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1"></a>dfe <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>(turma,interess) <span class="sc">%&gt;%</span></span>
+<span id="cb93-2"><a href="#cb93-2"></a>  <span class="fu">mutate_if</span>(is.factor,as.character) <span class="sc">%&gt;%</span> </span>
+<span id="cb93-3"><a href="#cb93-3"></a>  <span class="fu">chisq_test</span>(turma <span class="sc">~</span> interess) </span>
+<span id="cb93-4"><a href="#cb93-4"></a></span>
+<span id="cb93-5"><a href="#cb93-5"></a></span>
+<span id="cb93-6"><a href="#cb93-6"></a>dfe <span class="sc">%&gt;%</span> <span class="fu">drop_na</span>(turma,interess) <span class="sc">%&gt;%</span></span>
+<span id="cb93-7"><a href="#cb93-7"></a>  <span class="fu">mutate_if</span>(is.factor,as.character) <span class="sc">%&gt;%</span> </span>
+<span id="cb93-8"><a href="#cb93-8"></a>  <span class="fu">chisq_test</span>(interess <span class="sc">~</span> turma)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section>
+<section>
+<section id="correlação" class="title-slide slide level1 center">
+<h1>Correlação</h1>
+
+<img data-src="imgs/corr1.png" class="r-stretch"></section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+
+<img data-src="imgs/corr2.png" class="r-stretch"></section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+
+<img data-src="imgs/corr3.png" class="r-stretch"></section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+<p>Três conceitos para a mesma idéia:</p>
+<ul>
+<li><p>Covariância</p></li>
+<li><p>Correlação</p></li>
+<li><p>Coeficiente de determinação (<span class="math inline">\(R^{2}\)</span>)</p></li>
+</ul>
+<p>São grandes em valor absoluto se houver forte relação linear</p>
+<p><a href="http://guessthecorrelation.com/">Guess the correlation</a></p>
+</section>
+<section id="covariância-e-correlação" class="slide level2">
+<h2>Covariância e correlação</h2>
+<p><span class="math display">\[
+\operatorname{Cov}(X, Y)=\frac{\sum_{i=1}^{N}\left(X_{i}-\mu_{x}\right)\left(Y_{i}-\mu_{y}\right)}{N}
+\]</span></p>
+<p>Uma área positiva indica associação positiva entre as variáveis.</p>
+<ul>
+<li><p>Mas como saber se é uma associação forte ou fraca?</p></li>
+<li><p>Qual a unidade de medida da covariância?</p></li>
+</ul>
+<p>Para eliminar a unidade de medida das variáveis, podemos usar a padronização z. Desta forma, obtemos o coeficiente de correlação, que é a covariância com variáveis padronizadas. Este coeficiente varia de -1 a 1.</p>
+<p><span class="math display">\[
+\operatorname{Corr}(X, Y)=\frac{\sum_{i=1}^{N}\left(\frac{X_{i}-\mu_{x}}{\sigma_{x}}\right)\left(\frac{Y_{i}-\mu_{y}}{\sigma_{y}}\right)}{N}
+\]</span></p>
+</section>
+<section id="section-4" class="slide level2">
+<h2></h2>
+
+<img data-src="imgs/correlacao.png" class="r-stretch"></section>
+<section id="faltas-e-nota-2" class="slide level2">
+<h2>Faltas e Nota 2</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1"></a>dfe <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>faltas,<span class="at">y=</span>nota2)) <span class="sc">+</span></span>
+<span id="cb94-2"><a href="#cb94-2"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-54-1.png" width="960" class="r-stretch"></section>
+<section id="com-ggpubr" class="slide level2">
+<h2>Com ggpubr</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a>dfe <span class="sc">%&gt;%</span> <span class="fu">ggscatter</span>(<span class="at">x =</span> <span class="st">"faltas"</span>, <span class="at">y =</span> <span class="st">"nota2"</span>,<span class="at">add =</span> <span class="st">"reg.line"</span>,<span class="at">conf.int =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb95-2"><a href="#cb95-2"></a>  <span class="fu">stat_cor</span>(<span class="at">method =</span> <span class="st">"pearson"</span>,<span class="at">label.x=</span><span class="dv">7</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-55-1.png" width="960" class="r-stretch"></section>
+<section id="com-ggpubr-2" class="slide level2">
+<h2>Com ggpubr 2</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1"></a>dfe <span class="sc">%&gt;%</span> <span class="fu">ggscatter</span>(<span class="at">x =</span> <span class="st">"faltas"</span>, <span class="at">y =</span> <span class="st">"nota2"</span>,<span class="at">add =</span> <span class="st">"reg.line"</span>,<span class="at">conf.int =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb96-2"><a href="#cb96-2"></a>          <span class="at">color =</span> <span class="st">"turma"</span>, <span class="at">palette =</span> <span class="st">"jco"</span>,<span class="at">shape =</span> <span class="st">"turma"</span>)<span class="sc">+</span></span>
+<span id="cb96-3"><a href="#cb96-3"></a>  <span class="fu">stat_cor</span>(<span class="fu">aes</span>(<span class="at">color =</span> turma), <span class="at">label.x =</span> <span class="dv">7</span>,<span class="at">label.y=</span><span class="fu">c</span>(<span class="dv">110</span>,<span class="dv">105</span>,<span class="dv">100</span>))</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-56-1.png" width="960" class="r-stretch"></section>
+<section id="correlação-1" class="slide level2">
+<h2>Correlação</h2>
+<p><a href="http://www.sthda.com/english/wiki/correlation-analyses-in-r">Um bom Guia</a></p>
+<p>Vendo correlações graficamente</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a>dfe <span class="sc">%&gt;%</span> <span class="fu">select_if</span>(is.numeric) <span class="sc">%&gt;%</span> <span class="fu">cor</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb97-2"><a href="#cb97-2"></a>  corrplot<span class="sc">::</span><span class="fu">corrplot</span>(.,<span class="at">method=</span><span class="st">"number"</span>,<span class="at">type=</span><span class="st">"upper"</span>,<span class="at">diag=</span><span class="cn">FALSE</span> )</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="vendo-correlações-graficamente" class="slide level2">
+<h2>Vendo correlações graficamente</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-58-1.png" width="960" class="r-stretch"><p><a href="http://www.sthda.com/english/wiki/visualize-correlation-matrix-using-correlogram">Para mais</a></p>
+</section></section>
+<section id="modelo-linear-simples" class="title-slide slide level1 center">
+<h1>Modelo Linear Simples</h1>
+<p><a href="https://fmeireles.shinyapps.io/modelagem_r/">Modelo linear simples estimado por mínimos quadrados ordinários (MQO).</a>.</p>
+<div class="footer footer-default">
+
+</div>
+</section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          // dispatch for htmlwidgets
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for reveal
+        if (window.Reveal) {
+          window.Reveal.addEventListener("slidechanged", function(event) {
+            fireSlideChanged(event.previousSlide, event.currentSlide);
+          });
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copiada");
+        setTimeout(function() {
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto-reveal',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          let href = ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+        tippyHover(ref, function() {
+          var popup = window.document.createElement('div');
+          cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    });
+    </script>
+    
+
+</body></html>
